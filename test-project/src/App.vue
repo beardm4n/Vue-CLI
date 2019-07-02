@@ -3,7 +3,11 @@
     <h1>Parent: {{ carName }}</h1>
     <h2>Parent: {{ carYear}}</h2>
 
-    <app-car :carName="carName" :carYear="carYear"></app-car>
+    <app-car
+            :carName="carName"
+            :carYear="carYear"
+            @nameChanged="carName = $event"
+    ></app-car>
   </div>
 </template>
 
