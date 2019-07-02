@@ -1,28 +1,30 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <h1>Parent: {{ carName }}</h1>
+    <h2>Parent: {{ carYear}}</h2>
+
+    <app-car v-for="car of 2" :carName="carName" :carYear="carYear"></app-car>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+
+  //локальное подключение компонента
+import Car from './components/Car.vue'
 
 export default {
-  name: 'app',
+  data () {
+    return {
+      carName: 'Ford from parent',
+      carYear: 2018
+    }
+  },
   components: {
-    HelloWorld
+    appCar: Car
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+
 </style>
