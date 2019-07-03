@@ -3,11 +3,13 @@
     <h1>Parent: {{ carName }}</h1>
     <h2>Parent: {{ carYear}}</h2>
 
+    <app-counter></app-counter>
     <app-car
             :carName="carName"
             :carYear="carYear"
             :changeFunc="changeNameToAudi"
             @nameChanged="carName = $event"
+            @counterUpdated="counter = $event"
     ></app-car>
   </div>
 </template>
@@ -16,6 +18,7 @@
 
   //локальное подключение компонента
 import Car from './components/Car.vue'
+import Counter from './components/Counter.vue'
 
 export default {
   data () {
@@ -30,7 +33,8 @@ export default {
     }
   },
   components: {
-    appCar: Car
+    appCar: Car,
+    appCounter: Counter
   }
 }
 </script>

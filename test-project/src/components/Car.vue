@@ -4,10 +4,13 @@
       <p>Year: {{ carYear }}</p>
       <button @click="changeName">Change name</button>
       <button @click="changeFunc()">Change from parent</button>
+      <button @click="updateCounter">Update Counter</button>
    </div>
 </template>
 
 <script>
+   import {eventEmitter} from "../main";
+
    export default {
       name: "Car",
       props: {
@@ -26,6 +29,10 @@
             // которое будет прослушиваться, вторым - значения, которыми мы
             // хотим уведомить другие компоненты ⟱
             this.$emit('nameChanged', this.carName)
+         },
+         updateCounter() {
+            // this.$emit('counterUpdated', this.counter + 1)
+            eventEmitter.$emit('counterUpdated', 3)
          }
       },
       computed: {

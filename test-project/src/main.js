@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import App from './App.vue'
 
+// шина событий
+export const eventEmitter = new Vue()
+
 // глобальное подключение компонента
 // import Car from './Car.vue'
 //
@@ -14,3 +17,5 @@ new Vue({
       return h(App)
     }*/
 }).$mount('#app')
+
+
