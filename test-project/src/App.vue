@@ -14,6 +14,34 @@
         <div class="invalid-feedback" v-if="!$v.email.required">Email field is required</div>
         <div class="invalid-feedback" v-if="!$v.email.email">This field should be an email</div>
       </div>
+<!--      поля пороля  -->
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+                type="password"
+                id="password"
+                class="form-control"
+                :class="{'is-invalid': $v.password.$error}"
+                @blur="$v.password.$touch()"
+                v-model="password"
+        >
+        <div class="invalid-feedback" v-if="!$v.password.minLength">
+          Min length of password is {{ $v.password.$params.minLength.min }}. Now it is {{ password.length }}</div>
+      </div>
+<!--подтверджение пароля-->
+      <div class="form-group">
+        <label for="password">Confirm password</label>
+        <input
+                type="password"
+                id="confirmPassword"
+                class="form-control"
+                :class="{'is-invalid': $v.confirmPassword.$error}"
+                @blur="$v.confirmPassword.$touch()"
+                v-model="confirmPassword"
+        >
+        <div class="invalid-feedback" v-if="!$v.confirmPassword.sameAs">
+          Passwords should match</div>
+      </div>
     </form>
   </div>
 </template>
@@ -21,12 +49,14 @@
 
 <script>
   //выбираем валидатор
-  import { required, email } from 'vuelidate/lib/validators'
+  import { required, email, minLength, sameAs } from 'vuelidate/lib/validators'
 
   export default {
     data() {
       return {
-        email: ''
+        email: '',
+        password: '',
+        confirmPassword: ''
       }
     },
     //после того как глобально подключили валидацию, у нас доступно поле validators
@@ -38,6 +68,19 @@
         //ключ должен совпадать с название валидатора
         required, // в ES6 существует свотйство, если ключ и значение совпадают можно просто оставить required без значения в старом стандате надо было required: required
         email
+      },
+      password: {
+        minLength: minLength(6)
+      },
+      confirmPassword: {
+        sameAs: sameAs('password')
+
+        //помимо строки можно передавать функцию, которая будет обозначать навание того поля или то поле, которое нам нужно проверять
+        // пример: стрелочная функция, которая принимает в себя инстанс vue текущий. мы должны вернуть то поле, по которому нас стоит смтортеть идентичность
+        // это нужно использовать если контролы, отвечающие за форму будут находится в отдельном объекте в data()
+        /*sameAs: sameAs((vue) => {
+          return vue.password
+        })*/
       }
     }
   }
