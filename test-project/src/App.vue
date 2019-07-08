@@ -13,6 +13,8 @@
         >
         <div class="invalid-feedback" v-if="!$v.email.required">Email field is required</div>
         <div class="invalid-feedback" v-if="!$v.email.email">This field should be an email</div>
+<!-- добавим сообщение о том, что данный email занят -->
+        <div class="invalid-feedback" v-if="!$v.email.uniqEmail">This email is already exist</div>
       </div>
 <!--      поля пороля  -->
       <div class="form-group">
@@ -67,7 +69,13 @@
         //здесь указываются те валидаторы, которые необходим использовать для валидации этого поля
         //ключ должен совпадать с название валидатора
         required, // в ES6 существует свотйство, если ключ и значение совпадают можно просто оставить required без значения в старом стандате надо было required: required
-        email
+        email,
+
+        //для того, чтобы создать нужный валидатор (собственный) поределим свойсвто, оно будет являться функцией, которая принимает в себя новое значение данного контрола:
+        uniqEmail: function (newEmail) {
+          // данный валидатор явл. функцией, поэтому она должна возвращаться значение, которое будет говорить валидное ли сейчас наше состояние или нет
+          return newEmail !== 'test@mail.ru'
+        }
       },
       password: {
         minLength: minLength(6)
