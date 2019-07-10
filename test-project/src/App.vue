@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <form class="pt-3">
+    <form class="pt-3" @submit.prevent="onSubmit">
       <div class="form-group">
         <label for="email">Email</label>
         <input
@@ -44,10 +44,14 @@
         <div class="invalid-feedback" v-if="!$v.confirmPassword.sameAs">
           Passwords should match</div>
       </div>
+      <button
+              class="btn btn-success"
+              type="submit"
+              :disabled="$v.$invalid"
+      >Submit</button>
     </form>
   </div>
 </template>
-
 
 <script>
   //выбираем валидатор
@@ -61,6 +65,14 @@
         confirmPassword: ''
       }
     },
+
+    methods: {
+      onSubmit () {
+         console.log('Email', this.email);
+         console.log('Password', this.password)
+      }
+    },
+
     //после того как глобально подключили валидацию, у нас доступно поле validators
     //в каждом инстансе
     validations: {
@@ -77,7 +89,7 @@
           // return newEmail !== 'test@mail.ru'
 
           // зададим условие, чтобы не было задержки при выполнении валидаторов required email, которые ждали пока джали когда сходим на сервер
-          if (newEmail === '') return true
+          if (newEmail === '') return true;
 
           // метод, если необходимо обратиться к серверу, получить какое-то значение и сравнить его правильно ли написан email, мы исопльзуем Promise (который явл. асинхронной конструкцией):
           return new Promise((resolve,reject) => {
@@ -86,7 +98,7 @@
             setTimeout(() => {
               const value = newEmail !== 'test@mail.ru'
               resolve(value)
-            }, 3000)
+            }, 1000)
           })
         }
       },
