@@ -2,6 +2,7 @@ import VueRouter from 'vue-router'
 import Home from './pages/Home'
 import Cars from './pages/Cars'
 import Car from './pages/Car'
+import CarFull from './pages/CarFull'
 
 // создаем базовую структуру экземпляра VueRouter нам необъодимо его зарегестрировать. для этого мы переходим в main.js
 export default new VueRouter({
@@ -20,7 +21,16 @@ export default new VueRouter({
        },
       {
          path: '/car/:id',
-         component: Car
+         component: Car,
+         //как сделать вложенный роут. для этого у каждого из объекта, который представляет нам роут, существует спец. поле - children
+         children: [
+            {
+               path: 'full', //http://localhost:8080/car/:id/full
+               component: CarFull,
+               //во Vue у каждого роута есть спец. свойство, кот. позволяет делать навигацию к определенному имени, соответственно, каждому роуту можно задать свое имя
+               name: 'carFull'
+            }
+         ]
       }
    ],
    //чтобы убрать значение хэша /#/ в строке пути. это переменная mode, если укзать значение history браузер будет сохранять историю посещения ссылок

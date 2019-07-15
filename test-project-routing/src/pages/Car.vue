@@ -3,7 +3,29 @@
       <h1>Car id {{ id }}</h1>
 
       <!-- ПРОГРАММНАЯ НАВИГАЦИЯ-->
-      <button class="btn btn-sm btn-info" @click="goBackToCars">Back</button>
+      <button class="btn btn-sm btn-secondary mb-2" @click="goBackToCars">Back</button>
+      <br>
+      <!--ВЛОЖЕННЫЕ РОУТЫ-->
+      <!--по клику на данную кнопку мы будем получать более детальную информацию-->
+<!--      <router-link-->
+<!--              class="btn btn-info mt-2"-->
+<!--              tag="button"-->
+<!--              :to="'/car/' + id + '/full'"-->
+<!--      >-->
+<!--         Full info-->
+<!--      </router-link>-->
+
+      <!--      рассмотрим пример - генератор ссылок Vue-->
+      <router-link
+              class="btn btn-info mt-2"
+              tag="button"
+              :to="{name: 'carFull', params: {id: id}}"
+      >
+         Full info
+      </router-link>
+      <hr>
+<!--обратимся к директиве Vue, чтобы указать куда нам надо рендерить (складывать) нужные нам роуты а именно дочерний роут компонента Car-->
+      <router-view></router-view>
    </div>
 </template>
 
