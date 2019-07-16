@@ -58,6 +58,14 @@
             //обратимся к id, который находится в данном инстенсе и к роуту, на который мы хотим перейти, к его полю params и полю id
             this.id = toR.params['id']
          }
+      },
+      beforeRouteLeave (to, fromR, next) {
+         console.log('beforeRouteLeave')
+         if (window.confirm('Are you sure want to leave?')) {
+            next()
+         } else {
+            next(false)
+         }
       }
    }
 </script>

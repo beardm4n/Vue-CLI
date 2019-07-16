@@ -30,15 +30,25 @@ export default new VueRouter({
                path: 'full', //http://localhost:8080/car/:id/full
                component: CarFull,
                //во Vue у каждого роута есть спец. свойство, кот. позволяет делать навигацию к определенному имени, соответственно, каждому роуту можно задать свое имя
-               name: 'carFull'
+               name: 'carFull',
+               // ЗАЩИТА РОУТОВ
+               beforeEnter (to, from, next) {
+                  console.log('beforeEnter')
+                  // if (false) {
+                  //    next(true)
+                  // } else {
+                  //    next(false)
+                  // }
+                  next()
+               }
             }
          ]
       },
        // РЕДИРЕКТ
       {
          path: '/none',
-         //redirect: '/cars'
-         //или:
+         //redirect: '/cars' через строку
+         //или через именованный роут:
          redirect: {
             name: 'home'
          }
