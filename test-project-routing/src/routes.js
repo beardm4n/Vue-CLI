@@ -3,6 +3,7 @@ import Home from './pages/Home'
 import Cars from './pages/Cars'
 import Car from './pages/Car'
 import CarFull from './pages/CarFull'
+import ErrorCmp from './pages/Error'
 
 // создаем базовую структуру экземпляра VueRouter нам необъодимо его зарегестрировать. для этого мы переходим в main.js
 export default new VueRouter({
@@ -12,7 +13,8 @@ export default new VueRouter({
        {
           //описываем как минимум два поля: path - передаем некую строку, за какой путь отвечает определенный компонент
           path: '', //localhost:8080
-          component: Home
+          component: Home,
+          name: 'home'
        },
        {
          //описываем как минимум два поля: path - передаем некую строку, за какой путь отвечает определенный компонент
@@ -31,6 +33,20 @@ export default new VueRouter({
                name: 'carFull'
             }
          ]
+      },
+       // РЕДИРЕКТ
+      {
+         path: '/none',
+         //redirect: '/cars'
+         //или:
+         redirect: {
+            name: 'home'
+         }
+      },
+      {
+         //спец. значок * - значает, что для всех роутов, которые не определены, будет вызываться дааный роут
+         path: '*',
+         component: ErrorCmp
       }
    ],
    //чтобы убрать значение хэша /#/ в строке пути. это переменная mode, если укзать значение history браузер будет сохранять историю посещения ссылок
