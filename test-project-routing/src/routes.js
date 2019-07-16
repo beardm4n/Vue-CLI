@@ -1,9 +1,23 @@
 import VueRouter from 'vue-router'
 import Home from './pages/Home'
-import Cars from './pages/Cars'
+//ЛЕНИВАЯ ЗАГРУЗКА
+// import Cars from './pages/Cars'  //лениво подгрузим страницу Cars, для этого уберем импорт, для того, чтобы webpack не складывал его в общий build
 import Car from './pages/Car'
 import CarFull from './pages/CarFull'
 import ErrorCmp from './pages/Error'
+
+//для того, чтобы сказать webpack'у откуда брать компонент Cars, мы опишем компонент немного по-другому: мы описываем как специальную функциюю с параметром resolve
+const Cars = resolve => {
+   //загружаем определенный файл: обращаемся к глобальной переменной, которую понимает webpack и вызываем метод - ensure
+   //в данный метод первым параметром передаем - массив, в нем мы указываем путь до компонента Cars,
+   //вторым параметром перпедаем callback где в нем вызываем метода, который получаем в данной функции - resolve. в этот метода передаем функции require, которую понимает webpack
+   //и в эту функцию передаем в строком формате путь до соовтественного компонета, который надо подгрузить
+    require.ensure(['./pages/Cars.vue'], () => {
+      resolve(
+          require('./pages/Cars')
+      )
+   })
+};
 
 // создаем базовую структуру экземпляра VueRouter нам необъодимо его зарегестрировать. для этого мы переходим в main.js
 export default new VueRouter({
